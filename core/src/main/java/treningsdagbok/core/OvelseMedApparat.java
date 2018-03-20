@@ -5,13 +5,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class OvelseMedApparat extends Ovelse implements ActiveDomainObject {
+public class OvelseMedApparat extends Ovelse {
 
     private int apparatID;
 
-    public void OvelseMedApparat(int ovelseID, String ovelseNavn, int apparatID) {
-        this.ovelseID = ovelseID;
-        this.ovelseNavn = ovelseNavn;
+    public OvelseMedApparat(int ovelseID, String ovelseNavn, int apparatID) {
+        super(ovelseID, ovelseNavn);
         this.apparatID = apparatID;
     }
 

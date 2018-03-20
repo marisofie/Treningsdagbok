@@ -42,4 +42,11 @@ public class Ovelse implements ActiveDomainObject {
         }
     }
 
+    @Override
+    public String toString() {
+        return "Ovelse{" +
+                "ovelseID=" + ovelseID +
+                ", ovelseNavn='" + ovelseNavn + '\'' +
+                '}';
+    }
 }

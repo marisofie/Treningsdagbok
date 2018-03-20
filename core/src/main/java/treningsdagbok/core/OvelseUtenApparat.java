@@ -5,11 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class OvelseUtenApparat extends Ovelse implements ActiveDomainObject {
+public class OvelseUtenApparat extends Ovelse {
 
-    public void OvelseUtenApparat(int ovelseID, String ovelseNavn) {
-        this.ovelseID = ovelseID;
-        this.ovelseNavn = ovelseNavn;
+    public OvelseUtenApparat(int ovelseID, String ovelseNavn) {
+        super(ovelseID, ovelseNavn);
     }
 
     /*public void getByID(Connection connection) {
