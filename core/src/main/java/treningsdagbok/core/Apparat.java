@@ -45,7 +45,6 @@ public class Apparat implements ActiveDomainObject {
         return this.funksjonsbeskrivelse;
     }
 
-    @Override
     public void getByID(Connection connection) {
         try {
             Statement stmt = connection.createStatement();
@@ -108,5 +107,5 @@ public class Apparat implements ActiveDomainObject {
     public String toString() {
         return "Apparat: " + this.apparatID +", " + this.apparatNavn + ", " + this.funksjonsbeskrivelse;
     }
-    
+
 }
