@@ -1,14 +1,13 @@
 package treningsdagbok.core;
 
-import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
-
+import com.mysql.cj.jdbc.MysqlDataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 
 public class DBConnection {
 
-    protected Connection connection;
+    protected Connection conn;
 
     public void connect() {
 
@@ -16,7 +15,7 @@ public class DBConnection {
             MysqlDataSource dataSource = new MysqlDataSource();
             Properties dbProperties = new Properties();
 
-            dbProperties.put("url", "jdbc:mysql://mysql.stud.ntnu.no/marisler_dbproject:3306");
+            dbProperties.put("url", "jdbc:mysql://mysql.stud.ntnu.no:3306/marisler_dbproject");
             dbProperties.put("user", "marenwe_project");
             dbProperties.put("password", "WRHNB9pnZYCLYpKrGnrt");
 
@@ -24,7 +23,7 @@ public class DBConnection {
             dataSource.setUser(dbProperties.getProperty("user"));
             dataSource.setPassword(dbProperties.getProperty("password"));
 
-            connection = dataSource.getConnection();
+            conn = dataSource.getConnection();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -33,9 +32,9 @@ public class DBConnection {
     }
 
     public void disconnect() {
-        if (connection != null) {
+        if (conn != null) {
             try {
-                connection.close();
+                conn.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
