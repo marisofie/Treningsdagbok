@@ -5,16 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class SisteTreningsokterHandler extends DBConnection {
+public class SisteTreningsokterCtrl extends DBConnection {
 
     private Scanner scanner;
 
-    public SisteTreningsokterHandler(Scanner scanner) {
+    public SisteTreningsokterCtrl(Scanner scanner) {
         this.scanner = scanner;
+        super.connect();
     }
 
     public int getMaximumN() {
-        super.connect();
         int maxN = -1;
 
         try {
@@ -24,6 +24,9 @@ public class SisteTreningsokterHandler extends DBConnection {
             while (rs.next()) {
                 maxN = rs.getInt("maxN");
             }
+
+            rs.close();
+            stmt.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -59,11 +62,14 @@ public class SisteTreningsokterHandler extends DBConnection {
                 treningsokter.add(new Treningsokt(oktID, dato, tidspunkt, varighet, form, prestasjon));
             }
 
+            rs.close();
+            stmt.close();
+
             return treningsokter;
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException("Cannot get last n Treningsokter.");
+            throw new RuntimeException("Kan ikke hente de siste " + n + " treningsoktene.");
         }
     }
 
@@ -91,10 +97,5 @@ public class SisteTreningsokterHandler extends DBConnection {
         show(treningsokter);
         super.disconnect();
 
-    }
-
-    public static void main(String[] args) throws SQLException {
-        SisteTreningsokterHandler x = new SisteTreningsokterHandler(new Scanner(System.in));
-        x.run();
     }
 }

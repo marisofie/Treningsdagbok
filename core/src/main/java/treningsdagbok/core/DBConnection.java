@@ -15,7 +15,7 @@ public class DBConnection {
             MysqlDataSource dataSource = new MysqlDataSource();
             Properties dbProperties = new Properties();
 
-            dbProperties.put("url", "jdbc:mysql://mysql.stud.ntnu.no:3306/marisler_dbproject");
+            dbProperties.put("url", "jdbc:mysql://mysql.stud.ntnu.no:3306/marisler_dbproject?autoReconnect=true&useSSL=false");
             dbProperties.put("user", "marenwe_project");
             dbProperties.put("password", "WRHNB9pnZYCLYpKrGnrt");
 
