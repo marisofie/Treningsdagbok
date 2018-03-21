@@ -87,7 +87,7 @@ public class SisteTreningsokterCtrl extends DBConnection {
                 String formaal = rs.getString("Formaal");
                 String opplevelse = rs.getString("Opplevelse");
 
-                notat = new Notat(notatID, formaal, opplevelse);
+                notat = new Notat(notatID, formaal, opplevelse, okt.getOktID());
                 return notat;
             }
 
