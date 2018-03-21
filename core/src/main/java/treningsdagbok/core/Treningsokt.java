@@ -19,12 +19,7 @@ public class Treningsokt implements ActiveDomainObject {
         this.oktID = oktID;
         this.dato = dato;
         this.tidspunkt = tidspunkt;
-
-        if (checkNumber(varighet)) {
-            this.varighet = varighet;
-        } else {
-            throw new IllegalArgumentException("Varighet må være et tall mellom 1 og 10.");
-        }
+        this.varighet = varighet;
 
         if (checkNumber(form)) {
             this.form = form;
@@ -69,11 +64,7 @@ public class Treningsokt implements ActiveDomainObject {
     }
 
     public void setVarighet(int varighet) {
-        if (checkNumber(varighet)) {
-            this.varighet = varighet;
-        } else {
-            throw new IllegalArgumentException("Varighet må være et tall mellom 1 og 10.");
-        }
+        this.varighet = varighet;
     }
 
     public int getForm() {
@@ -102,8 +93,8 @@ public class Treningsokt implements ActiveDomainObject {
 
     public Boolean checkNumber(int number) {
         if (number < 1 || number > 10) {
-            return true;
-        } return false;
+            return false;
+        } return true;
     }
 
     @Override
