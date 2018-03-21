@@ -56,4 +56,8 @@ public class ResultatOvelseCtrl extends DBConnection {
         }
     }
 
+    public void run() {
+
+    }
+
 }

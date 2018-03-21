@@ -122,10 +122,13 @@ public class OpprettCtrl extends DBConnection {
                                 System.out.println("Oppgi øvelseID:");
                                 int ovelseID1 = scanner.nextInt();
 
-                                System.out.println("Oppgi øvelseNavn:");
-                                String ovelseNavn1 = scanner.nextLine();
+                                System.out.println("Oppgi antall kilo:");
+                                int kilo = scanner.nextInt();
 
-                                OvelseIOkt ovelseIOkt1 = new OvelseIOkt(ovelseID1, ovelseNavn1, true);
+                                System.out.println("Oppgi antall sett:");
+                                int sett = scanner.nextInt();
+
+                                OvelseIOkt ovelseIOkt1 = new OvelseIOkt(oktID, ovelseID1, kilo, sett, null, true);
                                 ovelseIOkt1.save(conn);
 
                                 System.out.println("Øvelsen er registrert.");
@@ -133,10 +136,10 @@ public class OpprettCtrl extends DBConnection {
                                 System.out.println("Oppgi øvelseID:");
                                 int ovelseID2 = scanner.nextInt();
 
-                                System.out.println("Oppgi øvelseNavn:");
-                                String ovelseNavn2 = scanner.nextLine();
+                                System.out.println("Beskriv øvelsen:");
+                                String beskrivelse = scanner.nextLine();
 
-                                OvelseIOkt ovelseIOkt2 = new OvelseIOkt(ovelseID2, ovelseNavn2, false);
+                                OvelseIOkt ovelseIOkt2 = new OvelseIOkt(oktID, ovelseID2, -1, -1, beskrivelse, false);
                                 ovelseIOkt2.save(conn);
 
                                 System.out.println("Øvelsen er registrert.");
@@ -147,10 +150,9 @@ public class OpprettCtrl extends DBConnection {
                     }
 
                 case 5:
+                    super.disconnect();
                     break;
             }
         }
-
-        super.disconnect();
     }
 }
