@@ -81,7 +81,7 @@ public class OvelseIOkt implements ActiveDomainObject {
                 stmt.close();
 
             } catch (SQLException e) {
-                throw new RuntimeException("Kunne ikke lagre Ovelse." + e);
+                throw new RuntimeException("Kunne ikke lagre Øvelse." + e);
             }
 
         }
@@ -93,7 +93,7 @@ public class OvelseIOkt implements ActiveDomainObject {
                 stmt.close();
 
             } catch (SQLException e) {
-                throw new RuntimeException("Kunne ikke lagre Ovelse." + e);
+                throw new RuntimeException("Kunne ikke lagre Øvelse." + e);
             }
 
         }

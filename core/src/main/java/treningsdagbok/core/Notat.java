@@ -10,7 +10,7 @@ public class Notat implements ActiveDomainObject{
     private int notatID;
     private String formaal;
     private String opplevelse;
-    private int oktID
+    private int oktID;
 
 
     public Notat(int notatID, String formaal, String opplevelse, int oktID) {
