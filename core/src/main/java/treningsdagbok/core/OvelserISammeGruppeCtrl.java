@@ -23,13 +23,12 @@ public class OvelserISammeGruppeCtrl extends DBConnection {
 
         try {
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT OvelseID, OvelseNavn FROM OvelseMedApparat UNION SELECT OvelseID, OvelseNavn from OvelseUtenApparat where OvelseMedApparat.GruppeID = " + gruppeID + " and OvelseUtenApparat.GruppeID = " + gruppeID);
+            ResultSet rs = stmt.executeQuery("SELECT OvelseNavn FROM OvelseMedApparat WHERE OvelseMedApparat.GruppeID = " + gruppeID + " UNION SELECT OvelseNavn from OvelseUtenApparat where OvelseUtenApparat.GruppeID = " + gruppeID);
 
             while (rs.next()) {
                 boolean created = false;
-                int ovelseID = rs.getInt("OvelseID");
                 String ovelseNavn = rs.getString("OvelseNavn");
-                ovelse = new OvelseUtenApparat(ovelseID, ovelseNavn, 0);
+                ovelse = new OvelseUtenApparat(0, ovelseNavn, 0);
                 ovelser.add(ovelse);
             }
 
