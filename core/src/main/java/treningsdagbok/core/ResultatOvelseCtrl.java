@@ -13,7 +13,6 @@ public class ResultatOvelseCtrl extends DBConnection {
     }
 
 
-
     public Date getMaxDate() {
         Date maxDate = Date.valueOf("1900-01-01");
 
