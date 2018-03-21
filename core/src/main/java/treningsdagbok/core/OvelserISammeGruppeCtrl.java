@@ -54,11 +54,11 @@ public class OvelserISammeGruppeCtrl extends DBConnection {
         System.out.println("Oppgi hva du vil gjøre.");
         System.out.println("Tast 1 for å opprette ny øvelsesgruppe." + "\nTast 2 for å se øvelser i en gitt gruppe.");
 
-        String choice = scanner.nextLine();
+        int choice = scanner.nextInt();
 
         switch(choice) {
 
-            case("1"):
+            case(1):
                 System.out.println("Oppgi gruppeID:");
                 int gruppeID1 = scanner.nextInt();
 
@@ -72,7 +72,7 @@ public class OvelserISammeGruppeCtrl extends DBConnection {
                 System.out.println("Øvelsesgruppen ble lagt til i dagboken.");
                 super.disconnect();
 
-            case("2"):
+            case(2):
                 System.out.println("Oppgi gruppeID til gruppen du ønsker å se:");
                 int gruppeID2 = scanner.nextInt();
 

@@ -1,5 +1,6 @@
 package treningsdagbok.core;
 
+import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,9 +74,38 @@ public class SisteTreningsokterCtrl extends DBConnection {
         }
     }
 
+    public Notat getNotat(Treningsokt okt) {
+
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("Select NotatID, Formaal, Opplevelse FROM Notat WHERE OktID =" + okt.getOktID());
+
+            Notat notat;
+
+            while (rs.next()) {
+                int notatID = rs.getInt("NotatID");
+                String formaal = rs.getString("Formaal");
+                String opplevelse = rs.getString("Opplevelse");
+
+                notat = new Notat(notatID, formaal, opplevelse);
+                return notat;
+            }
+
+            rs.close();
+            stmt.close();
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Kan ikke hente Notat");
+        }
+
+        return null;
+    }
+
     public void show(List<Treningsokt> treningsokter) {
         for (Treningsokt okt : treningsokter) {
             System.out.println(okt.toString());
+            System.out.println(getNotat(okt));
             System.out.println("\n");
         }
     }

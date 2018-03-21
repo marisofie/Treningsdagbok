@@ -11,7 +11,7 @@ public class TreningsdagbokMain {
     private List<Integer> validInput = new ArrayList<>();
 
     public TreningsdagbokMain() {
-        Scanner scanner = new Scanner(System.in);
+        this.scanner = new Scanner(System.in);
         validInput.add(1);
         validInput.add(2);
         validInput.add(3);
@@ -21,36 +21,44 @@ public class TreningsdagbokMain {
     }
 
     public void run() throws SQLException {
-        String welcome = "Treningsdagbok";
-        String choices = "Hva vil du gjøre?" + "\nTast 1 for å registrere apparat, øvelse eller treningsøkt"
-                + "\nTast 2 for å få opp informasjon om tidligere treningsøkter" + "\nTast 3 for å få opp resultatlogg"
-                + "\nTast 4 for å lage øvelsegruppe eller finne øvelser etter gruppe" + "\nTast 5 for å få opp form og prestasjon til treningsøkter"
-                + "\nSkriv 6 for å avslutte";
+        while (true) {
+            String welcome = "Treningsdagbok";
+            String choices = "Hva vil du gjøre?" + "\nTast 1 for å registrere apparat, øvelse eller treningsøkt"
+                    + "\nTast 2 for å få opp informasjon om tidligere treningsøkter" + "\nTast 3 for å få opp resultatlogg"
+                    + "\nTast 4 for å lage øvelsegruppe eller finne øvelser etter gruppe" + "\nTast 5 for å få opp form og prestasjon til treningsøkter"
+                    + "\nSkriv 6 for å avslutte";
 
-        System.out.println(welcome + "\n" + choices);
+            System.out.println(welcome + "\n" + choices);
 
-        String choice = scanner.nextLine();
+            int choice = this.scanner.nextInt();
 
-        while (!validInput.contains(choice)) {
-            System.out.println("Klarte ikke registrere valget ditt. Prøv igjen!");
-            System.out.println(choices);
-            choice = scanner.nextLine();
-        }
+            while (!validInput.contains(choice)) {
+                System.out.println("Klarte ikke registrere valget ditt. Prøv igjen!");
+                System.out.println(choices);
+                choice = scanner.nextInt();
+            }
 
-        switch(choice) {
-            case "1":
-                break;
-            case "2":
-                break;
-            case "3":
-                break;
-            case "4":
-                break;
-            case "5":
-                break;
-            case "6":
-                System.out.println("God trening!");
-                break;
+            switch(choice) {
+                case 1:
+                    break;
+                case 2:
+                    SisteTreningsokterCtrl sisteTreningsokterCtrl = new SisteTreningsokterCtrl(this.scanner);
+                    sisteTreningsokterCtrl.run();
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    OvelserISammeGruppeCtrl ovelserISammeGruppeCtrl = new OvelserISammeGruppeCtrl(this.scanner);
+                    ovelserISammeGruppeCtrl.run();
+                    break;
+                case 5:
+                    SisteTreningsokterCtrl sisteTreningsokterCtrl1 = new SisteTreningsokterCtrl(this.scanner);
+                    sisteTreningsokterCtrl1.runFormPrestasjon();
+                    break;
+                case 6:
+                    System.out.println("God trening!");
+                    break;
+            }
         }
     }
 
