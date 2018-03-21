@@ -7,9 +7,18 @@ import java.sql.Statement;
 
 public class OvelseUtenApparat extends Ovelse {
 
-    public OvelseUtenApparat(String ovelseNavn) {
+    //Til lagring av data
+    public OvelseUtenApparat(String ovelseNavn, int gruppeID) {
         this.ovelseID = IDCounter++;
         this.ovelseNavn = ovelseNavn;
+        this.gruppeID = gruppeID;
+    }
+
+    //Til uthenting av data
+    public OvelseUtenApparat(int ovelseID, String ovelseNavn, int gruppeID) {
+        this.ovelseID = ovelseID;
+        this.ovelseNavn = ovelseNavn;
+        this.gruppeID = gruppeID;
     }
 
     public void save(Connection connection) {
@@ -35,7 +44,7 @@ public class OvelseUtenApparat extends Ovelse {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    } */
+    }*/
 
     @Override
     public String toString() {

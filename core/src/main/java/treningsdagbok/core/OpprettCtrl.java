@@ -15,89 +15,142 @@ public class OpprettCtrl extends DBConnection {
 
     public void run() {
         System.out.println("Oppgi hva du vil gjøre.");
-        System.out.println("Tast 1 for å registrere et nytt apparat." + "\nTast 2 for å registrere ny øvelse uten apparat." + "\nTast 3 for å registrere ny øvelse med apparat." + "\nTast 4 for å registrere ny treningsøkt");
+        System.out.println("Tast 1 for å registrere et nytt apparat." + "\nTast 2 for å registrere ny øvelse uten apparat." + "\nTast 3 for å registrere ny øvelse med apparat." + "\nTast 4 for å registrere ny treningsøkt" + "\nTast 5 for å gå tilbake til hovedmenyen.");
 
         int choice = scanner.nextInt();
 
-        switch(choice) {
+        while (true) {
+            switch(choice) {
 
-            case 1:
-                System.out.println("Oppgi apparatID:");
-                int apparatID = scanner.nextInt();
+                case 1:
+                    System.out.println("Oppgi apparatID:");
+                    int apparatID = scanner.nextInt();
 
-                System.out.println("Oppgi navn på apparatet:");
-                String apparatNavn = scanner.nextLine();
+                    System.out.println("Oppgi navn på apparatet:");
+                    String apparatNavn = scanner.nextLine();
 
-                System.out.println("Beskriv funksjonen til apparatet:");
-                String funksjonsbeskrivelse = scanner.nextLine();
+                    System.out.println("Beskriv funksjonen til apparatet:");
+                    String funksjonsbeskrivelse = scanner.nextLine();
 
-                Apparat apparat = new Apparat(apparatID, apparatNavn, funksjonsbeskrivelse);
+                    Apparat apparat = new Apparat(apparatID, apparatNavn, funksjonsbeskrivelse);
 
-                apparat.save(conn);
+                    apparat.save(conn);
 
-                System.out.println("Apparatet er registrert.");
+                    System.out.println("Apparatet er registrert.");
 
-                super.disconnect();
+                case 2:
+                    System.out.println("Oppgi navn på øvelsen:");
+                    String ovelseUANavn = scanner.nextLine();
 
+                    System.out.println("Oppgi gruppeID:");
+                    int gruppeID1 = scanner.nextInt();
 
-            case 2:
-                System.out.println("Oppgi øvelseID:");
-                int ovelseUAID = scanner.nextInt();
+                    OvelseUtenApparat ovelseUtenApparat = new OvelseUtenApparat(ovelseUANavn, gruppeID1);
 
-                System.out.println("Oppgi navn på øvelsen:");
-                String ovelseUANavn = scanner.nextLine();
+                    ovelseUtenApparat.save(conn);
 
-                OvelseUtenApparat ovelseUtenApparat = new OvelseUtenApparat(ovelseUAID, ovelseUANavn);
+                    System.out.println("Øvelsen er registrert.");
 
-                ovelseUtenApparat.save(conn);
+                case 3:
+                    System.out.println("Oppgi navn på øvelsen:");
+                    String ovelseMANavn = scanner.nextLine();
 
-                System.out.println("Øvelsen er registrert.");
+                    System.out.println("Oppgi apparatID:");
+                    int ovelseApparatID = scanner.nextInt();
 
-                super.disconnect();
+                    System.out.println("Oppgi gruppeID:");
+                    int gruppeID2 = scanner.nextInt();
 
-            case 3:
-                System.out.println("Oppgi øvelseID:");
-                int ovelseMAID = scanner.nextInt();
+                    OvelseMedApparat ovelseMedApparat = new OvelseMedApparat(ovelseMANavn, ovelseApparatID, gruppeID2);
 
-                System.out.println("Oppgi navn på øvelsen:");
-                String ovelseMANavn = scanner.nextLine();
+                    ovelseMedApparat.save(conn);
 
-                System.out.println("Oppgi apparatID:");
-                int ovelseApparatID = scanner.nextInt();
+                    System.out.println("Øvelsen er registrert.");
 
-                OvelseMedApparat ovelseMedApparat = new OvelseMedApparat(ovelseMAID, ovelseMANavn, ovelseApparatID);
+                case 4:
+                    System.out.println("Oppgi øktID:");
+                    int oktID = scanner.nextInt();
 
-                ovelseMedApparat.save(conn);
+                    System.out.println("Oppgi dato (format: yyyy-mm-dd):");
+                    String datoString = scanner.nextLine();
+                    Date dato = Date.valueOf(datoString);
 
-                System.out.println("Øvelsen er registrert.");
+                    System.out.println("Oppgi tidspunkt (format: hh:mm:ss):");
+                    String tidspunktString = scanner.nextLine();
+                    Time tidspunkt = Time.valueOf(tidspunktString);
 
-                super.disconnect();
+                    System.out.println("Oppgi varighet:");
+                    int varighet = scanner.nextInt();
 
-            case 4:
-                System.out.println("Oppgi øktID:");
-                int oktID = scanner.nextInt();
+                    System.out.println("Oppgi form (1-10):");
+                    int form = scanner.nextInt();
 
-                System.out.println("Oppgi dato (format: yyyy-mm-dd):");
-                String datoString = scanner.nextLine();
-                Date dato = Date.valueOf(datoString);
+                    System.out.println("Oppgi prestasjon (1-10):");
+                    int prestasjon = scanner.nextInt();
 
-                System.out.println("Oppgi tidspunkt (format: hh:mm:ss):");
-                String tidspunktString = scanner.nextLine();
-                Time tidspunkt = Time.valueOf(tidspunktString);
+                    System.out.println("Vil du opprette notat? (ja/nei)");
+                    String choiceNotat = scanner.nextLine();
 
-                System.out.println("Oppgi varighet:");
-                int varighet = scanner.nextInt();
+                    Treningsokt treningsokt = new Treningsokt(oktID, dato, tidspunkt, varighet, form, prestasjon);
 
-                System.out.println("Oppgi form (1-10):");
-                int form = scanner.nextInt();
+                    switch(choiceNotat) {
+                        case "ja":
+                            System.out.println("Oppgi notatID:");
+                            int notatID = scanner.nextInt();
 
-                System.out.println("Oppgi prestasjon (1-10):");
-                int prestasjon = scanner.nextInt();
+                            System.out.println("Hva var formålet med treningsøkten?");
+                            String formaal = scanner.nextLine();
 
-                Treningsokt treningsokt = new Treningsokt(oktID, dato, tidspunkt, varighet, form, prestasjon);
+                            System.out.println("Hvordan opplevde du treningsøkten?");
+                            String opplevelse = scanner.nextLine();
 
-                super.disconnect();
+                            Notat notat = new Notat(notatID, formaal, opplevelse, oktID);
+                            notat.save(conn);
+
+                            System.out.println("Notatet er registrert.");
+
+                        case "nei":
+                            break;
+                    }
+
+                    System.out.println("Vil du legge til en øvelse (med/uten) apparat eller (ingen) øvelse?");
+                    String choiceOvelse = scanner.nextLine();
+
+                    while(true) {
+                        switch(choiceOvelse) {
+                            case "med":
+                                System.out.println("Oppgi øvelseID:");
+                                int ovelseID1 = scanner.nextInt();
+
+                                System.out.println("Oppgi øvelseNavn:");
+                                String ovelseNavn1 = scanner.nextLine();
+
+                                OvelseIOkt ovelseIOkt1 = new OvelseIOkt(ovelseID1, ovelseNavn1, true);
+                                ovelseIOkt1.save(conn);
+
+                                System.out.println("Øvelsen er registrert.");
+                            case "uten":
+                                System.out.println("Oppgi øvelseID:");
+                                int ovelseID2 = scanner.nextInt();
+
+                                System.out.println("Oppgi øvelseNavn:");
+                                String ovelseNavn2 = scanner.nextLine();
+
+                                OvelseIOkt ovelseIOkt2 = new OvelseIOkt(ovelseID2, ovelseNavn2, false);
+                                ovelseIOkt2.save(conn);
+
+                                System.out.println("Øvelsen er registrert.");
+
+                            case "ingen":
+                                break;
+                        }
+                    }
+
+                case 5:
+                    break;
+            }
         }
 
+        super.disconnect();
     }
 }

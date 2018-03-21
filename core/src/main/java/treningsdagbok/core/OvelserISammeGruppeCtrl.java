@@ -23,12 +23,13 @@ public class OvelserISammeGruppeCtrl extends DBConnection {
 
         try {
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("select OvelseID, OvelseNavn from OvelseIGruppe inner join Ovelse on OvelseIGruppe.OvelseID = Ovelse.OvelseID where GruppeID =" + gruppeID);
+            ResultSet rs = stmt.executeQuery("SELECT OvelseID, OvelseNavn FROM OvelseMedApparat UNION OvelseUtenApparat where OvelseMedApparat.GruppeID = " + gruppeID + " and OvelseUtenApparat.GruppeID = " + gruppeID);
 
             while (rs.next()) {
+                boolean created = false;
                 int ovelseID = rs.getInt("OvelseID");
                 String ovelseNavn = rs.getString("OvelseNavn");
-                ovelse = new Ovelse(ovelseID, ovelseNavn);
+                ovelse = new OvelseUtenApparat(ovelseID, ovelseNavn, 0);
                 ovelser.add(ovelse);
             }
 
@@ -49,8 +50,6 @@ public class OvelserISammeGruppeCtrl extends DBConnection {
             System.out.println("\n");
         }
     }
-
-    //MÅ ENDRES!!
 
     public void run() {
         System.out.println("Oppgi hva du vil gjøre.");

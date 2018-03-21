@@ -9,10 +9,20 @@ public class OvelseMedApparat extends Ovelse {
 
     private int apparatID;
 
-    public OvelseMedApparat(String ovelseNavn, int apparatID) {
+    //Til lagring av data
+    public OvelseMedApparat(String ovelseNavn, int apparatID, int gruppeID) {
         this.ovelseID = IDCounter++;
         this.ovelseNavn = ovelseNavn;
         this.apparatID = apparatID;
+        this.gruppeID = gruppeID;
+    }
+
+    // Til uthenting av data
+    public OvelseMedApparat(int ovelseID, String ovelseNavn, int apparatID, int gruppeID) {
+        this.ovelseID = ovelseID;
+        this.ovelseNavn = ovelseNavn;
+        this.apparatID = apparatID;
+        this.gruppeID = gruppeID;
     }
 
     public int getApparatID() {
