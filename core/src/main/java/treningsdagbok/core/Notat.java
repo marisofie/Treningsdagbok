@@ -7,15 +7,17 @@ import java.sql.SQLException;
 
 public class Notat implements ActiveDomainObject{
 
-    private int notatID = -1;
+    private int notatID;
     private String formaal;
     private String opplevelse;
+    private int oktID
 
 
-    public Notat(int notatID, String formaal, String opplevelse) {
+    public Notat(int notatID, String formaal, String opplevelse, int oktID) {
         this.notatID = notatID;
         this.formaal = formaal;
         this.opplevelse = opplevelse;
+        this.oktID = oktID;
     }
 
     public void setNotatID(int notatID) {
@@ -23,7 +25,7 @@ public class Notat implements ActiveDomainObject{
     }
 
     public int getNotatID() {
-        return this.notatID;
+        return notatID;
     }
 
     public void setFormaal(String formaal) {
@@ -31,7 +33,7 @@ public class Notat implements ActiveDomainObject{
     }
 
     public String getFormaal() {
-        return this.formaal;
+        return formaal;
     }
 
     public void setOpplevelse(String opplevelse) {
@@ -39,13 +41,28 @@ public class Notat implements ActiveDomainObject{
     }
 
     public String getOpplevelse() {
-        return this.opplevelse;
+        return opplevelse;
     }
 
-    public void getByID(Connection connection) {
+
+    @Override
+    public void save(Connection connection) {
 
         try {
             Statement stmt = connection.createStatement();
+            stmt.executeUpdate("insert into Notat values ("+this.notatID+","+this.formaal+","+this.opplevelse+")");
+
+            stmt.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Kunne ikke lagre notat." + e);        }
+
+    }
+
+    public void getByID(Connection conn) {
+
+        try {
+            Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("select Formaal, Opplevelse from Notat where NotatID = " + this.notatID);
 
             while (rs.next()) {
@@ -53,30 +70,20 @@ public class Notat implements ActiveDomainObject{
                 this.opplevelse = rs.getString("Opplevelse");
             }
 
-        }catch (SQLException e) {
-            e.printStackTrace();
+            stmt.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Kunne ikke lagre notat." + e);
         }
-
     }
-
 
     @Override
-    public void save(Connection connection) {
-
-        if (this.notatID == -1 || this.opplevelse == null || this.formaal == null){
-            throw new IllegalStateException("Missing input.");
-        }
-
-        try {
-            Statement stmt = connection.createStatement();
-            stmt.executeUpdate("insert into Notat values ("+this.notatID+","+this.formaal+","+this.opplevelse+")");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
-
     public String toString() {
-        return "Notat: " + this.notatID + ", " + this.formaal + ", " + this.opplevelse;
+        return "Notat{" +
+                "notatID=" + notatID +
+                ", formaal='" + formaal + '\'' +
+                ", opplevelse='" + opplevelse + '\'' +
+                ", oktID=" + oktID +
+                '}';
     }
 }

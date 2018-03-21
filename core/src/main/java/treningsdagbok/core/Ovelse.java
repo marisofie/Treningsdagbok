@@ -4,6 +4,7 @@ public abstract class Ovelse implements ActiveDomainObject {
 
     protected int ovelseID;
     protected String ovelseNavn;
+    protected int gruppeID;
 
     protected int IDCounter = 1;
 
