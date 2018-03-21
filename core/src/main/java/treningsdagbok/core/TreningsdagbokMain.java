@@ -41,23 +41,30 @@ public class TreningsdagbokMain {
             switch(choice) {
                 case 1:
                     OpprettCtrl opprettCtrl = new OpprettCtrl(scanner);
+                    break;
                 case 2:
                     SisteTreningsokterCtrl sisteTreningsokterCtrl = new SisteTreningsokterCtrl(scanner);
                     sisteTreningsokterCtrl.run();
+                    break;
                 case 3:
                     ResultatOvelseCtrl resultatOvelseCtrl = new ResultatOvelseCtrl(scanner);
                     resultatOvelseCtrl.run();
+                    break;
                 case 4:
                     OvelserISammeGruppeCtrl ovelserISammeGruppeCtrl = new OvelserISammeGruppeCtrl(scanner);
                     ovelserISammeGruppeCtrl.run();
+                    break;
                 case 5:
                     FormPrestasjonCtrl formPrestasjonCtrl = new FormPrestasjonCtrl(scanner);
                     formPrestasjonCtrl.run();
+                    break;
                 case 6:
                     System.out.println("God trening!");
-                    scanner.close();
                     break;
             }
+
+            scanner.close();
+            break;
         }
     }
 
