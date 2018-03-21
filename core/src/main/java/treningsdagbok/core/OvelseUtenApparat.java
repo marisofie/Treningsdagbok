@@ -7,8 +7,20 @@ import java.sql.Statement;
 
 public class OvelseUtenApparat extends Ovelse {
 
-    public OvelseUtenApparat(int ovelseID, String ovelseNavn) {
-        super(ovelseID, ovelseNavn);
+    public OvelseUtenApparat(String ovelseNavn) {
+        this.ovelseID = IDCounter++;
+        this.ovelseNavn = ovelseNavn;
+    }
+
+    public void save(Connection connection) {
+        try {
+            Statement stmt = connection.createStatement();
+            stmt.executeUpdate("insert into OvelseUtenApparat values ("+this.ovelseID+","+this.ovelseNavn+")");
+
+            stmt.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Kunne ikke registrere øvelse." + e);        }
     }
 
     /*public void getByID(Connection connection) {

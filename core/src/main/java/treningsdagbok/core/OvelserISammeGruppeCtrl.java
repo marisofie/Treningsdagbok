@@ -50,6 +50,8 @@ public class OvelserISammeGruppeCtrl extends DBConnection {
         }
     }
 
+    //MÅ ENDRES!!
+
     public void run() {
         System.out.println("Oppgi hva du vil gjøre.");
         System.out.println("Tast 1 for å opprette ny øvelsesgruppe." + "\nTast 2 for å se øvelser i en gitt gruppe.");

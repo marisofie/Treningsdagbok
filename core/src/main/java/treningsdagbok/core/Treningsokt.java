@@ -106,13 +106,20 @@ public class Treningsokt implements ActiveDomainObject {
             stmt.close();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Kunne ikke lagre treningsøkt." + e);
         }
 
     }
 
+    @Override
     public String toString() {
-        return "TRENINGSOKT" + "\n" + "OktID" + "\t" + "Dato" + "\t" + "Tidspunkt" + "\t" + "Varighet" + "\t" + "Form" + "\t" + "Prestasjon"
-                + "\n" + this.oktID + "\t" + this.dato + "\t" + this.tidspunkt + "\t" + this.varighet + "\t" + this.form + "\t" + this.prestasjon;
+        return "Treningsokt{" +
+                "oktID=" + oktID +
+                ", dato=" + dato +
+                ", tidspunkt=" + tidspunkt +
+                ", varighet=" + varighet +
+                ", form=" + form +
+                ", prestasjon=" + prestasjon +
+                '}';
     }
 }
