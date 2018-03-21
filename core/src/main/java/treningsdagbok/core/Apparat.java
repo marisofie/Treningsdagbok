@@ -21,31 +21,31 @@ public class Apparat implements ActiveDomainObject {
         this.funksjonsbeskrivelse = funksjonsbeskrivelse;
     }
 
+    public int getApparatID() {
+        return apparatID;
+    }
+
     public void setApparatID(int apparatID) {
         this.apparatID = apparatID;
     }
 
-    public int getApparatID() {
-        return this.apparatID;
+    public String getApparatNavn() {
+        return apparatNavn;
     }
 
     public void setApparatNavn(String apparatNavn) {
         this.apparatNavn = apparatNavn;
     }
 
-    public String getApparatNavn(){
-        return this.apparatNavn;
+    public String getFunksjonsbeskrivelse() {
+        return funksjonsbeskrivelse;
     }
 
-    public void setFunksjonsBeskrivelse(String funksjonsbeskrivelse) {
+    public void setFunksjonsbeskrivelse(String funksjonsbeskrivelse) {
         this.funksjonsbeskrivelse = funksjonsbeskrivelse;
     }
 
-    public String getFunksjonsbeskrivelse() {
-        return this.funksjonsbeskrivelse;
-    }
-
-    public void getByID(Connection connection) {
+    /*public void getByID(Connection connection) {
         try {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery("select ApparatNavn, Funksjonsbeskrivelse from Apparat where ApparatID = " + this.apparatID);
@@ -58,19 +58,18 @@ public class Apparat implements ActiveDomainObject {
             e.printStackTrace();
         }
 
-    }
+    } */
 
     @Override
-    public void save(Connection connection) {
-        if (this.apparatID == -1 || this.apparatNavn == null || this.funksjonsbeskrivelse == null){
-            throw new IllegalStateException("ApparatID, ApparatNavn and Funksjonsbeskrivelse must be set.");
-        }
-
+    public void save(Connection conn) {
         try {
-            Statement stmt = connection.createStatement();
+            Statement stmt = conn.createStatement();
             stmt.executeUpdate("insert into Apparat values ("+this.apparatID+","+this.apparatNavn+","+this.funksjonsbeskrivelse+")");
+
+            stmt.close();
+
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Kunne ikke registrere apparat " + e);
         }
 
     }
@@ -94,18 +93,25 @@ public class Apparat implements ActiveDomainObject {
                 System.out.print(apparater);
             }
 
+            rs.close();
+            stmt.close();
+
             return apparater;
 
         }catch (SQLException e) {
-            throw new RuntimeException("Unable to load all Apparater" + e);
+            throw new RuntimeException("Kunne ikke hente alle apparater" + e);
         }
 
 
 
     }
 
+    @Override
     public String toString() {
-        return "Apparat: " + this.apparatID +", " + this.apparatNavn + ", " + this.funksjonsbeskrivelse;
+        return "Apparat{" +
+                "apparatID=" + apparatID +
+                ", apparatNavn='" + apparatNavn + '\'' +
+                ", funksjonsbeskrivelse='" + funksjonsbeskrivelse + '\'' +
+                '}';
     }
-
 }

@@ -9,8 +9,9 @@ public class OvelseMedApparat extends Ovelse {
 
     private int apparatID;
 
-    public OvelseMedApparat(int ovelseID, String ovelseNavn, int apparatID) {
-        super(ovelseID, ovelseNavn);
+    public OvelseMedApparat(String ovelseNavn, int apparatID) {
+        this.ovelseID = IDCounter++;
+        this.ovelseNavn = ovelseNavn;
         this.apparatID = apparatID;
     }
 
@@ -32,7 +33,7 @@ public class OvelseMedApparat extends Ovelse {
             stmt.close();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Kunne registrere øvelse." + e);
         }
     }
 

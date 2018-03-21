@@ -1,17 +1,14 @@
 package treningsdagbok.core;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-
-public class Ovelse implements ActiveDomainObject {
+public abstract class Ovelse implements ActiveDomainObject {
 
     protected int ovelseID;
     protected String ovelseNavn;
 
-    public Ovelse(int ovelseID, String ovelseNavn) {
-        this.ovelseID = ovelseID;
-        this.ovelseNavn = ovelseNavn;
+    protected int IDCounter = 1;
+
+    public int getIDCounter() {
+        return IDCounter;
     }
 
     public int getOvelseID() {
@@ -28,25 +25,5 @@ public class Ovelse implements ActiveDomainObject {
 
     public void setOvelseNavn(String ovelseNavn) {
         this.ovelseNavn = ovelseNavn;
-    }
-
-    public void save(Connection connection) {
-        try {
-            Statement stmt = connection.createStatement();
-            stmt.executeUpdate("insert into OvelseUtenApparat values ("+this.ovelseID+","+this.ovelseNavn+")");
-
-            stmt.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public String toString() {
-        return "Ovelse{" +
-                "ovelseID=" + ovelseID +
-                ", ovelseNavn='" + ovelseNavn + '\'' +
-                '}';
     }
 }
