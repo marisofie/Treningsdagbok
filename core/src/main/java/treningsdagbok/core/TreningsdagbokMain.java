@@ -52,8 +52,8 @@ public class TreningsdagbokMain {
                     ovelserISammeGruppeCtrl.run();
                     break;
                 case 5:
-                    SisteTreningsokterCtrl sisteTreningsokterCtrl1 = new SisteTreningsokterCtrl(this.scanner);
-                    sisteTreningsokterCtrl1.runFormPrestasjon();
+                    FormPrestasjonCtrl formPrestasjonCtrl = new FormPrestasjonCtrl(this.scanner);
+                    formPrestasjonCtrl.run();
                     break;
                 case 6:
                     System.out.println("God trening!");
