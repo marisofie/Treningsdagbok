@@ -62,6 +62,9 @@ public class TreningsdagbokMain {
                     System.out.println("God trening!");
                     break;
             }
+
+            scanner.close();
+            break;
         }
     }
 

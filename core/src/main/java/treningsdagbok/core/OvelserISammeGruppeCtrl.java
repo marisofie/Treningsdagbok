@@ -23,7 +23,7 @@ public class OvelserISammeGruppeCtrl extends DBConnection {
 
         try {
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT OvelseID, OvelseNavn FROM OvelseMedApparat UNION OvelseUtenApparat where OvelseMedApparat.GruppeID = " + gruppeID + " and OvelseUtenApparat.GruppeID = " + gruppeID);
+            ResultSet rs = stmt.executeQuery("SELECT OvelseID, OvelseNavn FROM OvelseMedApparat UNION SELECT OvelseID, OvelseNavn from OvelseUtenApparat where OvelseMedApparat.GruppeID = " + gruppeID + " and OvelseUtenApparat.GruppeID = " + gruppeID);
 
             while (rs.next()) {
                 boolean created = false;
