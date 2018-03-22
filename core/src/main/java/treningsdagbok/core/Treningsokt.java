@@ -101,7 +101,7 @@ public class Treningsokt implements ActiveDomainObject {
     public void save(Connection conn) {
         try {
             Statement stmt = conn.createStatement();
-            stmt.executeUpdate("insert into Treningsokt values ("+this.oktID+","+this.dato+","+this.tidspunkt+","+this.varighet+","+this.form+","+this.prestasjon+")");
+            stmt.executeUpdate("INSERT INTO Treningsokt VALUES ("+this.oktID+","+this.dato+","+this.tidspunkt+","+this.varighet+","+this.form+","+this.prestasjon+")");
 
             stmt.close();
 
@@ -113,13 +113,12 @@ public class Treningsokt implements ActiveDomainObject {
 
     @Override
     public String toString() {
-        return "Treningsokt{" +
-                "oktID=" + oktID +
-                ", dato=" + dato +
-                ", tidspunkt=" + tidspunkt +
-                ", varighet=" + varighet +
-                ", form=" + form +
-                ", prestasjon=" + prestasjon +
-                '}';
+        return "Treningsokt: \n" +
+                "oktID: " + oktID +
+                "\nDato: " + dato +
+                "\nTidspunkt: " + tidspunkt + " minutter" +
+                "\nVarighet: " + varighet +
+                "\nForm: " + form +
+                "\nPrestasjon: " + prestasjon;
     }
 }

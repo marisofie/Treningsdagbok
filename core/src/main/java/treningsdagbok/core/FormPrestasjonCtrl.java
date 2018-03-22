@@ -40,7 +40,7 @@ public class FormPrestasjonCtrl extends DBConnection {
 
 
     public Boolean dateOK(Date date, Date maxDate) {
-        if (date.after(maxDate)) {
+        if (date.after(maxDate) || date.compareTo(maxDate) == 0) {
             return true;
         }
         return false;
@@ -53,9 +53,13 @@ public class FormPrestasjonCtrl extends DBConnection {
 
         try {
 
-            Statement stmt = conn.createStatement();
-            //Trenger kanskje endring, må sjekkes.
-            ResultSet rs = stmt.executeQuery("SELECT OktID, Dato, Form, Prestasjon FROM Treningsokt WHERE Dato BETWEEN " + date + " AND " + today);
+            String sql = "SELECT OktID, Dato, Form, Prestasjon FROM Treningsokt WHERE Dato BETWEEN ? AND ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setDate(1, date);
+            stmt.setDate(2, today);
+
+            ResultSet rs = stmt.executeQuery();
 
             List<Treningsokt> treningsokter = new ArrayList<>();
 
@@ -90,9 +94,8 @@ public class FormPrestasjonCtrl extends DBConnection {
     }
 
 
-    public void run() {
+    public void run() throws SQLException {
         System.out.println("Oppgi en dato for å få opp form og prestasjon for et tidsintervall, på formen YYYY-MM-DD");
-
         Date maxDate = getMaxDate();
 
         String input = scanner.next().trim();
@@ -109,6 +112,21 @@ public class FormPrestasjonCtrl extends DBConnection {
 
         List<Treningsokt> treningsokter = getFormPrestasjon(dato);
         show(treningsokter);
-        super.disconnect();
+
+        System.out.println("Hvis du vil tilbake til hovedmenyen skriv (1), hvis du vil fortsette skriv (2)");
+
+        int choice = scanner.nextInt();
+
+        switch(choice) {
+            case 1:
+                super.disconnect();
+                TreningsdagbokMain treningsdagbokMain = new TreningsdagbokMain();
+                treningsdagbokMain.run();
+                break;
+
+            case 2:
+                this.run();
+
+        }
     }
 }

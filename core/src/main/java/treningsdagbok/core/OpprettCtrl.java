@@ -128,7 +128,7 @@ public class OpprettCtrl extends DBConnection {
                                 System.out.println("Oppgi antall sett:");
                                 int sett = scanner.nextInt();
 
-                                OvelseIOkt ovelseIOkt1 = new OvelseIOkt(oktID, ovelseID1, kilo, sett, null, true);
+                                OvelseIOkt ovelseIOkt1 = new OvelseIOkt(oktID, ovelseID1, null, kilo, sett, null, null, true);
                                 ovelseIOkt1.save(conn);
 
                                 System.out.println("Øvelsen er registrert.");
@@ -139,7 +139,7 @@ public class OpprettCtrl extends DBConnection {
                                 System.out.println("Beskriv øvelsen:");
                                 String beskrivelse = scanner.nextLine();
 
-                                OvelseIOkt ovelseIOkt2 = new OvelseIOkt(oktID, ovelseID2, -1, -1, beskrivelse, false);
+                                OvelseIOkt ovelseIOkt2 = new OvelseIOkt(oktID, ovelseID2, null,-1, -1, beskrivelse, null, false);
                                 ovelseIOkt2.save(conn);
 
                                 System.out.println("Øvelsen er registrert.");

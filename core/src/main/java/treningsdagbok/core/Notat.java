@@ -50,7 +50,7 @@ public class Notat implements ActiveDomainObject{
 
         try {
             Statement stmt = connection.createStatement();
-            stmt.executeUpdate("insert into Notat values ("+this.notatID+","+this.formaal+","+this.opplevelse+")");
+            stmt.executeUpdate("INSERT INTO Notat VALUES ("+this.notatID+","+this.formaal+","+this.opplevelse+")");
 
             stmt.close();
 
@@ -63,7 +63,7 @@ public class Notat implements ActiveDomainObject{
 
         try {
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("select Formaal, Opplevelse from Notat where NotatID = " + this.notatID);
+            ResultSet rs = stmt.executeQuery("SELECT Formaal, Opplevelse FROM Notat WHERE NotatID = " + this.notatID);
 
             while (rs.next()) {
                 this.formaal = rs.getString("Formaal");
@@ -79,11 +79,9 @@ public class Notat implements ActiveDomainObject{
 
     @Override
     public String toString() {
-        return "Notat{" +
-                "notatID=" + notatID +
-                ", formaal='" + formaal + '\'' +
-                ", opplevelse='" + opplevelse + '\'' +
-                ", oktID=" + oktID +
-                '}';
+        return "Notat: " +
+                "\nNotatID: " + notatID +
+                "\nFormaal: '" + formaal + '\'' +
+                "\nOpplevelse: '" + opplevelse + '\'';
     }
 }

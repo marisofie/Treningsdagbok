@@ -35,7 +35,7 @@ public class Ovelsesgruppe implements ActiveDomainObject {
     public void save(Connection conn) {
         try {
             Statement stmt = conn.createStatement();
-            stmt.executeUpdate("insert into OvelsesGruppe values (" + this.gruppeID + "," + this.gruppenavn + ")");
+            stmt.executeUpdate("INSERT INTO OvelsesGruppe VALUES (" + this.gruppeID + "," + this.gruppenavn + ")");
 
             stmt.close();
 
@@ -47,10 +47,9 @@ public class Ovelsesgruppe implements ActiveDomainObject {
 
     @Override
     public String toString() {
-        return "Ovelsesgruppe{" +
-                "gruppeID=" + gruppeID +
-                ", gruppeNavn='" + gruppenavn + '\'' +
-                '}';
+        return "Ovelsesgruppe: " +
+                "\nGruppeID: " + gruppeID +
+                "\nGruppeNavn: '" + gruppenavn + '\'';
     }
 }
 

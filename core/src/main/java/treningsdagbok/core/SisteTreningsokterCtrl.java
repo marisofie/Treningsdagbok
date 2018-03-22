@@ -78,7 +78,7 @@ public class SisteTreningsokterCtrl extends DBConnection {
 
         try {
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("Select NotatID, Formaal, Opplevelse FROM Notat WHERE OktID =" + okt.getOktID());
+            ResultSet rs = stmt.executeQuery("SELECT NotatID, Formaal, Opplevelse FROM Notat WHERE OktID =" + okt.getOktID());
 
             Notat notat;
 
@@ -110,7 +110,7 @@ public class SisteTreningsokterCtrl extends DBConnection {
         }
     }
 
-    public void run() {
+    public void run() throws SQLException {
         System.out.println("Oppgi antall siste gjennomførte treningsøkter du vil se");
 
         int maxN = this.getMaximumN();
@@ -125,7 +125,21 @@ public class SisteTreningsokterCtrl extends DBConnection {
 
         List<Treningsokt> treningsokter = getAll(n);
         show(treningsokter);
-        super.disconnect();
+
+        System.out.println("Hvis du vil tilbake til hovedmenyen skriv (1), hvis du vil få opp n nye treningsøkter skriv (2)");
+
+        int choice = scanner.nextInt();
+
+        switch(choice) {
+            case 1:
+                super.disconnect();
+                TreningsdagbokMain treningsdagbokMain = new TreningsdagbokMain();
+                treningsdagbokMain.run();
+                break;
+
+            case 2:
+                this.run();
+        }
 
     }
 }
