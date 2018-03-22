@@ -63,8 +63,7 @@ public class OvelseMedApparat extends Ovelse {
 
     @Override
     public String toString() {
-        return "OvelseMedApparat: " +
-                "\nOvelseID: " + ovelseID +
+        return "Ovelse: " +
                 "\nOvelseNavn: '" + ovelseNavn + '\'' +
                 "\nApparatID: " + apparatID;
     }

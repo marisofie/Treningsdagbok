@@ -24,7 +24,7 @@ public class OvelseUtenApparat extends Ovelse {
     public void save(Connection connection) {
         try {
             Statement stmt = connection.createStatement();
-            stmt.executeUpdate("insert into OvelseUtenApparat values ("+this.ovelseID+","+this.ovelseNavn+")");
+            stmt.executeUpdate("INSERT INTO  OvelseUtenApparat VALUES ("+this.ovelseID+","+this.ovelseNavn+")");
 
             stmt.close();
 
@@ -48,9 +48,7 @@ public class OvelseUtenApparat extends Ovelse {
 
     @Override
     public String toString() {
-        return "OvelseUtenApparat{" +
-                "ovelseID=" + ovelseID +
-                ", ovelseNavn='" + ovelseNavn + '\'' +
-                '}';
+        return "Ovelse: " +
+                "\nOvelseNavn: '" + this.ovelseNavn + '\'';
     }
 }

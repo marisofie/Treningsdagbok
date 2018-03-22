@@ -32,6 +32,7 @@ public class OvelserISammeGruppeCtrl extends DBConnection {
                 ovelser.add(ovelse);
             }
 
+
             rs.close();
             stmt.close();
 
@@ -50,7 +51,7 @@ public class OvelserISammeGruppeCtrl extends DBConnection {
         }
     }
 
-    public void run() {
+    public void run() throws SQLException{
         System.out.println("Oppgi hva du vil gjøre.");
         System.out.println("Tast 1 for å opprette ny øvelsesgruppe." + "\nTast 2 for å se øvelser i en gitt gruppe.");
 
@@ -63,14 +64,13 @@ public class OvelserISammeGruppeCtrl extends DBConnection {
                 int gruppeID1 = scanner.nextInt();
 
                 System.out.println("Oppgi gruppernavn:");
-                String gruppenavn = scanner.nextLine();
+                String gruppenavn = scanner.next();
 
                 Ovelsesgruppe ovelsesgruppe = new Ovelsesgruppe(gruppeID1, gruppenavn);
 
                 ovelsesgruppe.save(conn);
 
                 System.out.println("Øvelsesgruppen ble lagt til i dagboken.");
-                super.disconnect();
 
             case(2):
                 System.out.println("Oppgi gruppeID til gruppen du ønsker å se:");
@@ -81,9 +81,26 @@ public class OvelserISammeGruppeCtrl extends DBConnection {
                 if (ovelser.size() == 0) {
                     System.out.println("Gruppe " + gruppeID2 + " inneholder ingen øvelser enda.");
                 }
-                System.out.println("Øvelser i gruppe " + gruppeID2 + ":");
-                show(ovelser);
+                else {
+                    System.out.println("Øvelser i gruppe " + gruppeID2 + ":");
+                    show(ovelser);
+                }
+        }
+
+        System.out.println("Hvis du vil tilbake til hovedmenyen skriv (1), hvis du vil fortsette skriv (2)");
+
+        int choice2 = scanner.nextInt();
+
+        switch(choice2) {
+            case 1:
                 super.disconnect();
+                TreningsdagbokMain treningsdagbokMain = new TreningsdagbokMain();
+                treningsdagbokMain.run();
+                break;
+
+            case 2:
+                this.run();
+
         }
     }
 }

@@ -1,9 +1,6 @@
 package treningsdagbok.core;
 
-import java.sql.Statement;
-import java.sql.ResultSet;
-import java.sql.Connection;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class Ovelsesgruppe implements ActiveDomainObject {
 
@@ -34,8 +31,13 @@ public class Ovelsesgruppe implements ActiveDomainObject {
     @Override
     public void save(Connection conn) {
         try {
-            Statement stmt = conn.createStatement();
-            stmt.executeUpdate("INSERT INTO OvelsesGruppe VALUES (" + this.gruppeID + "," + this.gruppenavn + ")");
+            String sql = ("INSERT INTO Ovelsesgruppe VALUES ((?), (?))"); //(" + this.gruppeID + "," + this.gruppenavn + ")");
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setInt(1, this.gruppeID);
+            stmt.setString(2, this.gruppenavn);
+
+            stmt.executeUpdate();
 
             stmt.close();
 

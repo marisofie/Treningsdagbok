@@ -47,17 +47,15 @@ public class FormPrestasjonCtrl extends DBConnection {
     }
 
 
-    public List<Treningsokt> getFormPrestasjon(Date date) {
-
-        Date today = Date.valueOf("2020-03-21");
+    public List<Treningsokt> getFormPrestasjon(Date start, Date slutt) {
 
         try {
 
             String sql = "SELECT OktID, Dato, Form, Prestasjon FROM Treningsokt WHERE Dato BETWEEN ? AND ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
 
-            stmt.setDate(1, date);
-            stmt.setDate(2, today);
+            stmt.setDate(1, start);
+            stmt.setDate(2, slutt);
 
             ResultSet rs = stmt.executeQuery();
 
@@ -95,22 +93,27 @@ public class FormPrestasjonCtrl extends DBConnection {
 
 
     public void run() throws SQLException {
-        System.out.println("Oppgi en dato for å få opp form og prestasjon for et tidsintervall, på formen YYYY-MM-DD");
+        System.out.println("Oppgi en startdato for å få opp form og prestasjon for et tidsintervall, på formen YYYY-MM-DD");
         Date maxDate = getMaxDate();
 
         String input = scanner.next().trim();
-        Date dato = Date.valueOf(input);
+        Date start = Date.valueOf(input);
 
-        while (!dateOK(dato, maxDate)) {
+        while (!dateOK(start, maxDate)) {
 
             System.out.println("Du har ikke treningsøkter registrert så langt tilbake i tid. Tidsintervallet må være lik eller etter " + maxDate);
             System.out.println("Oppgi dato på formen YYYY-MM-DD");
 
             input = scanner.next();
-            dato = Date.valueOf(input);
+            start = Date.valueOf(input);
         }
 
-        List<Treningsokt> treningsokter = getFormPrestasjon(dato);
+        System.out.println("Oppgi en sluttdato for å få opp form og prestasjon for et tidsintervall, på formen YYYY-MM-DD");
+
+        String sluttDato = scanner.next();
+        Date slutt = Date.valueOf(sluttDato);
+
+        List<Treningsokt> treningsokter = getFormPrestasjon(start, slutt);
         show(treningsokter);
 
         System.out.println("Hvis du vil tilbake til hovedmenyen skriv (1), hvis du vil fortsette skriv (2)");
