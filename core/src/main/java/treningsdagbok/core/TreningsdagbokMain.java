@@ -41,6 +41,7 @@ public class TreningsdagbokMain {
             switch(choice) {
                 case 1:
                     OpprettCtrl opprettCtrl = new OpprettCtrl(scanner);
+                    opprettCtrl.run();
                     break;
                 case 2:
                     SisteTreningsokterCtrl sisteTreningsokterCtrl = new SisteTreningsokterCtrl(scanner);

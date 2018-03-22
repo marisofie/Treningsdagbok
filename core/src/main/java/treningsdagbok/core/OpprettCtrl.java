@@ -15,12 +15,12 @@ public class OpprettCtrl extends DBConnection {
     }
 
     public void run() throws SQLException {
-        System.out.println("Oppgi hva du vil gjøre.");
-        System.out.println("Tast 1 for å registrere et nytt apparat." + "\nTast 2 for å registrere ny øvelse uten apparat." + "\nTast 3 for å registrere ny øvelse med apparat." + "\nTast 4 for å registrere ny treningsøkt" + "\nTast 5 for å gå tilbake til hovedmenyen.");
-
-        int choice = scanner.nextInt();
-
         while (true) {
+            System.out.println("Oppgi hva du vil gjøre.");
+            System.out.println("Tast 1 for å registrere et nytt apparat." + "\nTast 2 for å registrere ny øvelse uten apparat." + "\nTast 3 for å registrere ny øvelse med apparat." + "\nTast 4 for å registrere ny treningsøkt" + "\nTast 5 for å gå tilbake til hovedmenyen.");
+
+            int choice = scanner.nextInt();
+
             switch (choice) {
 
                 case 1:
@@ -28,10 +28,10 @@ public class OpprettCtrl extends DBConnection {
                     int apparatID = scanner.nextInt();
 
                     System.out.println("Oppgi navn på apparatet:");
-                    String apparatNavn = scanner.nextLine();
+                    String apparatNavn = scanner.next();
 
                     System.out.println("Beskriv funksjonen til apparatet:");
-                    String funksjonsbeskrivelse = scanner.nextLine();
+                    String funksjonsbeskrivelse = scanner.next();
 
                     Apparat apparat = new Apparat(apparatID, apparatNavn, funksjonsbeskrivelse);
 
@@ -39,9 +39,11 @@ public class OpprettCtrl extends DBConnection {
 
                     System.out.println("Apparatet er registrert.");
 
+                    break;
+
                 case 2:
                     System.out.println("Oppgi navn på øvelsen:");
-                    String ovelseUANavn = scanner.nextLine();
+                    String ovelseUANavn = scanner.next();
 
                     System.out.println("Oppgi gruppeID:");
                     int gruppeID1 = scanner.nextInt();
@@ -52,9 +54,11 @@ public class OpprettCtrl extends DBConnection {
 
                     System.out.println("Øvelsen er registrert.");
 
+                    break;
+
                 case 3:
                     System.out.println("Oppgi navn på øvelsen:");
-                    String ovelseMANavn = scanner.nextLine();
+                    String ovelseMANavn = scanner.next();
 
                     System.out.println("Oppgi apparatID:");
                     int ovelseApparatID = scanner.nextInt();
@@ -68,16 +72,18 @@ public class OpprettCtrl extends DBConnection {
 
                     System.out.println("Øvelsen er registrert.");
 
+                    break;
+
                 case 4:
                     System.out.println("Oppgi øktID:");
                     int oktID = scanner.nextInt();
 
                     System.out.println("Oppgi dato (format: yyyy-mm-dd):");
-                    String datoString = scanner.nextLine();
+                    String datoString = scanner.next();
                     Date dato = Date.valueOf(datoString);
 
                     System.out.println("Oppgi tidspunkt (format: hh:mm:ss):");
-                    String tidspunktString = scanner.nextLine();
+                    String tidspunktString = scanner.next();
                     Time tidspunkt = Time.valueOf(tidspunktString);
 
                     System.out.println("Oppgi varighet:");
@@ -90,9 +96,10 @@ public class OpprettCtrl extends DBConnection {
                     int prestasjon = scanner.nextInt();
 
                     System.out.println("Vil du opprette notat? (ja/nei)");
-                    String choiceNotat = scanner.nextLine();
+                    String choiceNotat = scanner.next();
 
                     Treningsokt treningsokt = new Treningsokt(oktID, dato, tidspunkt, varighet, form, prestasjon);
+                    treningsokt.save(conn);
 
                     switch (choiceNotat) {
                         case "ja":
@@ -100,10 +107,10 @@ public class OpprettCtrl extends DBConnection {
                             int notatID = scanner.nextInt();
 
                             System.out.println("Hva var formålet med treningsøkten?");
-                            String formaal = scanner.nextLine();
+                            String formaal = scanner.next();
 
                             System.out.println("Hvordan opplevde du treningsøkten?");
-                            String opplevelse = scanner.nextLine();
+                            String opplevelse = scanner.next();
 
                             Notat notat = new Notat(notatID, formaal, opplevelse, oktID);
                             notat.save(conn);
@@ -115,48 +122,54 @@ public class OpprettCtrl extends DBConnection {
                     }
 
                     System.out.println("Vil du legge til en øvelse (med/uten) apparat eller (ingen) øvelse?");
-                    String choiceOvelse = scanner.nextLine();
+                    String choiceOvelse = scanner.next();
 
-                    while (true) {
-                        switch (choiceOvelse) {
-                            case "med":
-                                System.out.println("Oppgi øvelseID:");
-                                int ovelseID1 = scanner.nextInt();
+                    switch (choiceOvelse) {
+                        case "med":
+                            System.out.println("Oppgi øvelseID:");
+                            int ovelseID1 = scanner.nextInt();
 
-                                System.out.println("Oppgi antall kilo:");
-                                int kilo = scanner.nextInt();
+                            System.out.println("Oppgi antall kilo:");
+                            int kilo = scanner.nextInt();
 
-                                System.out.println("Oppgi antall sett:");
-                                int sett = scanner.nextInt();
+                            System.out.println("Oppgi antall sett:");
+                            int sett = scanner.nextInt();
 
-                                OvelseIOkt ovelseIOkt1 = new OvelseIOkt(oktID, ovelseID1, null, kilo, sett, null, null, true);
-                                ovelseIOkt1.save(conn);
+                            OvelseIOkt ovelseIOkt1 = new OvelseIOkt(oktID, ovelseID1, kilo, sett);
+                            ovelseIOkt1.save(conn);
 
-                                System.out.println("Øvelsen er registrert.");
-                            case "uten":
-                                System.out.println("Oppgi øvelseID:");
-                                int ovelseID2 = scanner.nextInt();
+                            System.out.println("Øvelsen er registrert.");
 
-                                System.out.println("Beskriv øvelsen:");
-                                String beskrivelse = scanner.nextLine();
+                            break;
 
-                                OvelseIOkt ovelseIOkt2 = new OvelseIOkt(oktID, ovelseID2, null, -1, -1, beskrivelse, null, false);
-                                ovelseIOkt2.save(conn);
+                        case "uten":
+                            System.out.println("Oppgi øvelseID:");
+                            int ovelseID2 = scanner.nextInt();
 
-                                System.out.println("Øvelsen er registrert.");
+                            System.out.println("Beskriv øvelsen:");
+                            String beskrivelse = scanner.next();
 
-                            case "ingen":
-                                break;
-                        }
+                            OvelseIOkt ovelseIOkt2 = new OvelseIOkt(oktID, ovelseID2, beskrivelse);
+                            ovelseIOkt2.save(conn);
+
+                            System.out.println("Øvelsen er registrert.");
+
+                            break;
+
+                        case "ingen":
+                            break;
                     }
+
+                    break;
 
                 case 5:
                     super.disconnect();
                     TreningsdagbokMain treningsdagbokMain = new TreningsdagbokMain();
                     treningsdagbokMain.run();
                     break;
-            }
+                }
         }
     }
 }
+
 

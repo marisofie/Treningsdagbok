@@ -1,9 +1,6 @@
 package treningsdagbok.core;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Date;
+import java.sql.*;
 
 public class OvelseIOkt implements ActiveDomainObject {
 
@@ -16,6 +13,7 @@ public class OvelseIOkt implements ActiveDomainObject {
     private Date dato;
     private boolean medApparat;
 
+    //Til fremvisning
     public OvelseIOkt(int oktID, int ovelseID, String ovelseNavn, int kilo, int sett, String beskrivelse, Date dato, boolean medApparat) {
         this.oktID = oktID;
         this.ovelseID = ovelseID;
@@ -27,20 +25,29 @@ public class OvelseIOkt implements ActiveDomainObject {
         this.medApparat = medApparat;
     }
 
+    //Til lagring
+    public OvelseIOkt(int oktID, int ovelseID, String beskrivelse) {
+        this.oktID = oktID;
+        this.ovelseID = ovelseID;
+        this.beskrivelse = beskrivelse;
+        this.medApparat = false;
+    }
+
+    //Til lagring
+    public OvelseIOkt(int oktID, int ovelseID, int kilo, int sett) {
+        this.oktID = oktID;
+        this.ovelseID = ovelseID;
+        this.kilo = kilo;
+        this.sett = sett;
+        this.medApparat = true;
+    }
+
     public int getOktID() {
         return this.oktID;
     }
 
-    public void setOktID(int oktID) {
-        this.oktID = oktID;
-    }
-
     public int getOvelseID() {
         return this.ovelseID;
-    }
-
-    public void setOvelseID(int ovelseID) {
-        this.ovelseID = ovelseID;
     }
 
     public String getOvelseNavn() {
@@ -95,9 +102,15 @@ public class OvelseIOkt implements ActiveDomainObject {
     public void save(Connection conn) {
         if (!medApparat) {
             try {
-                Statement stmt = conn.createStatement();
-                stmt.executeUpdate("INSERT INTO OvelseIOktUtenApparat VALUES ("+this.oktID+","+this.ovelseID+","+this.beskrivelse+")");
+                String sql = "INSERT INTO OvelseIOktUtenApparat VALUES (?, ?, ?)";
+                PreparedStatement stmt = conn.prepareStatement(sql);
 
+                stmt.setInt(1, this.oktID);
+                stmt.setInt(2, this.ovelseID);
+                stmt.setString(3, this.beskrivelse);
+
+
+                stmt.executeUpdate();
                 stmt.close();
 
             } catch (SQLException e) {
@@ -107,9 +120,15 @@ public class OvelseIOkt implements ActiveDomainObject {
         }
         else {
             try {
-                Statement stmt = conn.createStatement();
-                stmt.executeUpdate("INSERT INTO OvelseIOktMedApparat VALUES ("+this.oktID+","+this.ovelseID+","+this.kilo+","+this.sett+")");
+                String sql = "INSERT INTO OvelseIOktMedApparat VALUES (?, ?, ?, ?)";
+                PreparedStatement stmt = conn.prepareStatement(sql);
 
+                stmt.setInt(1, this.oktID);
+                stmt.setInt(2, this.ovelseID);
+                stmt.setInt(3, this.kilo);
+                stmt.setInt(4, this.sett);
+
+                stmt.executeUpdate();
                 stmt.close();
 
             } catch (SQLException e) {

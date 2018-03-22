@@ -162,13 +162,20 @@ public class ResultatOvelseCtrl extends DBConnection {
         switch(medApparat) {
             case 1:
                 List<OvelseIOkt> ovelserMA = getOvelseResultater(start, stop, ovelsenavn, true);
-                show(ovelserMA, true);
+                if (ovelserMA.size() == 0) {
+                    System.out.println("Du har ingen registrerte resultater i oppgitt tidsintervall for øvelsen " + ovelsenavn);
+                } else {
+                    show(ovelserMA, true);
+                }
 
             case 2:
                 List<OvelseIOkt> ovelserUA = getOvelseResultater(start, stop, ovelsenavn, false);
-                show(ovelserUA, false);
+                if (ovelserUA.size() == 0) {
+                    System.out.println("Du har ingen registrerte resultater i oppgitt tidsintervall for øvelsen " + ovelsenavn);
+                } else {
+                    show(ovelserUA, false);
+                }
         }
-
 
         System.out.println("Hvis du vil tilbake til hovedmenyen skriv (1), hvis du vil fortsette skriv (2)");
 

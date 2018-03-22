@@ -1,10 +1,6 @@
 package treningsdagbok.core;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Date;
-import java.sql.Time;
+import java.sql.*;
 
 public class Treningsokt implements ActiveDomainObject {
 
@@ -37,10 +33,6 @@ public class Treningsokt implements ActiveDomainObject {
 
     public int getOktID() {
         return oktID;
-    }
-
-    public void setOktID(int oktID) {
-        this.oktID = oktID;
     }
 
     public Date getDato() {
@@ -100,9 +92,17 @@ public class Treningsokt implements ActiveDomainObject {
     @Override
     public void save(Connection conn) {
         try {
-            Statement stmt = conn.createStatement();
-            stmt.executeUpdate("INSERT INTO Treningsokt VALUES ("+this.oktID+","+this.dato+","+this.tidspunkt+","+this.varighet+","+this.form+","+this.prestasjon+")");
+            String sql = "INSERT INTO Treningsokt VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
 
+            stmt.setInt(1, this.oktID);
+            stmt.setDate(2, this.dato);
+            stmt.setTime(3, this.tidspunkt);
+            stmt.setInt(4, this.varighet);
+            stmt.setInt(5, this.form);
+            stmt.setInt(6, this.prestasjon);
+
+            stmt.executeUpdate();
             stmt.close();
 
         } catch (SQLException e) {

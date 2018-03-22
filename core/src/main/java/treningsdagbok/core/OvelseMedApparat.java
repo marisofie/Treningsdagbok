@@ -1,9 +1,6 @@
 package treningsdagbok.core;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class OvelseMedApparat extends Ovelse {
 
@@ -37,29 +34,21 @@ public class OvelseMedApparat extends Ovelse {
     @Override
     public void save(Connection conn) {
         try {
-            Statement stmt = conn.createStatement();
-            stmt.executeUpdate("INSERT INTO OvelseMedApparat VALUES ("+this.ovelseID+","+this.ovelseNavn+","+this.apparatID+")");
+            String sql = "INSERT INTO OvelseMedApparat VALUES (?, ?, ?, ?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
 
+            stmt.setInt(1, this.ovelseID);
+            stmt.setString(2, this.ovelseNavn);
+            stmt.setInt(3, this.apparatID);
+            stmt.setInt(4, this.gruppeID);
+
+            stmt.executeUpdate();
             stmt.close();
 
         } catch (SQLException e) {
             throw new RuntimeException("Kunne registrere øvelse." + e);
         }
     }
-
-    /* public void getByID(Connection connection) {
-        try {
-            Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("select OvelseNavn from OvelseMedApparat where OvelseMAID = " + this.ovelseID);
-
-            while (rs.next()) {
-                this.ovelseNavn = rs.getString("OvelseNavn");
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    } */
 
     @Override
     public String toString() {

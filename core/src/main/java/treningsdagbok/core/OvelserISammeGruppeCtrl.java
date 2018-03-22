@@ -72,6 +72,8 @@ public class OvelserISammeGruppeCtrl extends DBConnection {
 
                 System.out.println("Øvelsesgruppen ble lagt til i dagboken.");
 
+                break;
+
             case(2):
                 System.out.println("Oppgi gruppeID til gruppen du ønsker å se:");
                 int gruppeID2 = scanner.nextInt();
@@ -85,6 +87,8 @@ public class OvelserISammeGruppeCtrl extends DBConnection {
                     System.out.println("Øvelser i gruppe " + gruppeID2 + ":");
                     show(ovelser);
                 }
+
+                break;
         }
 
         System.out.println("Hvis du vil tilbake til hovedmenyen skriv (1), hvis du vil fortsette skriv (2)");

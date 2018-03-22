@@ -1,9 +1,6 @@
 package treningsdagbok.core;
 
-import java.sql.Connection;
-import java.sql.Statement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class Notat implements ActiveDomainObject{
 
@@ -18,10 +15,6 @@ public class Notat implements ActiveDomainObject{
         this.formaal = formaal;
         this.opplevelse = opplevelse;
         this.oktID = oktID;
-    }
-
-    public void setNotatID(int notatID) {
-        this.notatID = notatID;
     }
 
     public int getNotatID() {
@@ -46,12 +39,18 @@ public class Notat implements ActiveDomainObject{
 
 
     @Override
-    public void save(Connection connection) {
+    public void save(Connection conn) {
 
         try {
-            Statement stmt = connection.createStatement();
-            stmt.executeUpdate("INSERT INTO Notat VALUES ("+this.notatID+","+this.formaal+","+this.opplevelse+")");
+            String sql = "INSERT INTO Notat VALUES (?, ?, ?, ?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
 
+            stmt.setInt(1, this.notatID);
+            stmt.setString(2, this.formaal);
+            stmt.setString(3, this.opplevelse);
+            stmt.setInt(4, this.oktID);
+
+            stmt.executeUpdate();
             stmt.close();
 
         } catch (SQLException e) {

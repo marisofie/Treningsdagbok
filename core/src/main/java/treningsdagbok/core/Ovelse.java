@@ -16,10 +16,6 @@ public abstract class Ovelse implements ActiveDomainObject {
         return ovelseID;
     }
 
-    public void setOvelseID(int ovelseID) {
-        this.ovelseID = ovelseID;
-    }
-
     public String getOvelseNavn() {
         return ovelseNavn;
     }

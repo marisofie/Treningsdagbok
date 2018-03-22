@@ -1,9 +1,6 @@
 package treningsdagbok.core;
 
-import java.sql.Connection;
-import java.sql.Statement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +8,7 @@ import java.util.List;
 
 public class Apparat implements ActiveDomainObject {
 
-    private int apparatID = -1;
+    private int apparatID;
     private String apparatNavn;
     private String funksjonsbeskrivelse;
 
@@ -23,10 +20,6 @@ public class Apparat implements ActiveDomainObject {
 
     public int getApparatID() {
         return apparatID;
-    }
-
-    public void setApparatID(int apparatID) {
-        this.apparatID = apparatID;
     }
 
     public String getApparatNavn() {
@@ -45,36 +38,26 @@ public class Apparat implements ActiveDomainObject {
         this.funksjonsbeskrivelse = funksjonsbeskrivelse;
     }
 
-    /*public void getByID(Connection connection) {
-        try {
-            Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery("select ApparatNavn, Funksjonsbeskrivelse from Apparat where ApparatID = " + this.apparatID);
-
-            while (rs.next()) {
-                this.apparatNavn = rs.getString("ApparatNavn");
-                this.funksjonsbeskrivelse = rs.getString("Funksjonsbeskrivelse");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    } */
-
     @Override
     public void save(Connection conn) {
         try {
-            Statement stmt = conn.createStatement();
-            stmt.executeUpdate("insert into Apparat values ("+this.apparatID+","+this.apparatNavn+","+this.funksjonsbeskrivelse+")");
+
+            String sql = "insert into Apparat values (?,?,?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setInt(1, this.apparatID);
+            stmt.setString(2, this.apparatNavn);
+            stmt.setString(3, this.funksjonsbeskrivelse);
+
+            stmt.executeUpdate();
 
             stmt.close();
 
         } catch (SQLException e) {
-            throw new RuntimeException("Kunne ikke registrere apparat " + e);
+            throw new RuntimeException("Kunne ikke registrere apparat." + e);
         }
-
     }
 
-    //metode for å få ut alle apparater fra database.
     public static List<Apparat> getAll(Connection connection) {
 
         try {
@@ -87,9 +70,9 @@ public class Apparat implements ActiveDomainObject {
             while (rs.next()) {
                 int apparatID = rs.getInt("ApparatID");
                 String apparatNavn = rs.getString("ApparatNavn");
-                String funkbeskr = rs.getString("Funksjonsbeskrivelse");
+                String funkbeskrivelse = rs.getString("Funksjonsbeskrivelse");
 
-                apparater.add(new Apparat(apparatID, apparatNavn, funkbeskr));
+                apparater.add(new Apparat(apparatID, apparatNavn, funkbeskrivelse));
                 System.out.print(apparater);
             }
 
@@ -98,11 +81,9 @@ public class Apparat implements ActiveDomainObject {
 
             return apparater;
 
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException("Kunne ikke hente alle apparater" + e);
         }
-
-
 
     }
 
