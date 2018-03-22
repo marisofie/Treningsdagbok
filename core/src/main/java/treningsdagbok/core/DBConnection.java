@@ -1,7 +1,6 @@
 package treningsdagbok.core;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
-//import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
@@ -17,8 +16,8 @@ public class DBConnection {
             Properties dbProperties = new Properties();
 
             dbProperties.put("url", "jdbc:mysql://mysql.stud.ntnu.no:3306/marisler_dbproject?autoReconnect=true&useSSL=false");
-            dbProperties.put("user", "marenwe_project");
-            dbProperties.put("password", "WRHNB9pnZYCLYpKrGnrt");
+            dbProperties.put("user", null);
+            dbProperties.put("password", null);
 
             dataSource.setURL(dbProperties.getProperty("url"));
             dataSource.setUser(dbProperties.getProperty("user"));
