@@ -3,6 +3,7 @@ package treningsdagbok.core;
 import java.util.Scanner;
 import java.sql.Date;
 import java.sql.Time;
+import java.sql.SQLException;
 
 public class OpprettCtrl extends DBConnection {
 
@@ -13,14 +14,14 @@ public class OpprettCtrl extends DBConnection {
         super.connect();
     }
 
-    public void run() {
+    public void run() throws SQLException {
         System.out.println("Oppgi hva du vil gjøre.");
         System.out.println("Tast 1 for å registrere et nytt apparat." + "\nTast 2 for å registrere ny øvelse uten apparat." + "\nTast 3 for å registrere ny øvelse med apparat." + "\nTast 4 for å registrere ny treningsøkt" + "\nTast 5 for å gå tilbake til hovedmenyen.");
 
         int choice = scanner.nextInt();
 
         while (true) {
-            switch(choice) {
+            switch (choice) {
 
                 case 1:
                     System.out.println("Oppgi apparatID:");
@@ -93,7 +94,7 @@ public class OpprettCtrl extends DBConnection {
 
                     Treningsokt treningsokt = new Treningsokt(oktID, dato, tidspunkt, varighet, form, prestasjon);
 
-                    switch(choiceNotat) {
+                    switch (choiceNotat) {
                         case "ja":
                             System.out.println("Oppgi notatID:");
                             int notatID = scanner.nextInt();
@@ -116,8 +117,8 @@ public class OpprettCtrl extends DBConnection {
                     System.out.println("Vil du legge til en øvelse (med/uten) apparat eller (ingen) øvelse?");
                     String choiceOvelse = scanner.nextLine();
 
-                    while(true) {
-                        switch(choiceOvelse) {
+                    while (true) {
+                        switch (choiceOvelse) {
                             case "med":
                                 System.out.println("Oppgi øvelseID:");
                                 int ovelseID1 = scanner.nextInt();
@@ -139,7 +140,7 @@ public class OpprettCtrl extends DBConnection {
                                 System.out.println("Beskriv øvelsen:");
                                 String beskrivelse = scanner.nextLine();
 
-                                OvelseIOkt ovelseIOkt2 = new OvelseIOkt(oktID, ovelseID2, null,-1, -1, beskrivelse, null, false);
+                                OvelseIOkt ovelseIOkt2 = new OvelseIOkt(oktID, ovelseID2, null, -1, -1, beskrivelse, null, false);
                                 ovelseIOkt2.save(conn);
 
                                 System.out.println("Øvelsen er registrert.");
@@ -151,8 +152,11 @@ public class OpprettCtrl extends DBConnection {
 
                 case 5:
                     super.disconnect();
+                    TreningsdagbokMain treningsdagbokMain = new TreningsdagbokMain();
+                    treningsdagbokMain.run();
                     break;
             }
         }
     }
 }
+
